@@ -774,6 +774,9 @@ class TaskScheduler:
             raise ValueError(f"Task {task.name} has no context ID")
 
         config = initialize_agent()
+        # Use a free model for scheduled tasks to minimize API cost
+        config.chat_model.name = "google/gemma-3-27b-it:free"
+        config.chat_model.provider = "openrouter"
         context: AgentContext = AgentContext(config, id=task.context_id, name=task.name)
         # context.id = task.context_id
         # initial name before renaming is same as task name

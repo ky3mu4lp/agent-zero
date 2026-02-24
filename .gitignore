@@ -40,3 +40,14 @@ agent_history.gif
 
 .agent/**
 .claude/**
+
+# Personal session files — never commit to public fork
+GEMINI.md
+progress.md
+TODO.md
+NOTES.md
+*.personal.md
+*.private.md
+session_*.md
+.secrets
+secrets.env
