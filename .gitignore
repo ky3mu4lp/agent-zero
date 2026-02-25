@@ -51,3 +51,6 @@ NOTES.md
 session_*.md
 .secrets
 secrets.env
+
+# backup branch data — lives inside Docker/GitHub only, never in local working tree
+backup_data/
