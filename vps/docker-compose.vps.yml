@@ -6,7 +6,7 @@ services:
     container_name: A-01-VPS
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     volumes:
       # Main user data — skills, knowledge, projects, settings, tasks
       - /opt/agent-zero/usr:/a0/usr
