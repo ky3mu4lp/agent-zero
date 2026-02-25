@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  agent-zero:
+    image: frdel/agent-zero-run:latest
+    container_name: A-01-VPS
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - /opt/agent-zero/usr:/a0/usr
+    environment:
+      - AGENT_ZERO_AUTH_LOGIN=admin
+      - AGENT_ZERO_AUTH_PASSWORD=8273225462Gabylp@
+    networks:
+      - agent-net
+
+networks:
+  agent-net:
+    driver: bridge
