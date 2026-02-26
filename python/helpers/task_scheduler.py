@@ -775,8 +775,24 @@ class TaskScheduler:
 
         config = initialize_agent()
         # Use a free model for scheduled tasks to minimize API cost
+        # SECURITY RULE: Only free models used here — never auto-escalate to paid without confirmation
         config.chat_model.name = "google/gemma-3-27b-it:free"
         config.chat_model.provider = "openrouter"
+
+        # Set global litellm fallback chain for this process: free → free → free
+        # If gemma-3-27b rate limits, litellm automatically tries the next model
+        try:
+            import litellm as _litellm
+            _litellm.fallbacks = [
+                {
+                    "openrouter/google/gemma-3-27b-it:free": [
+                        "openrouter/mistralai/mistral-7b-instruct:free",
+                        "openrouter/meta-llama/llama-3.1-8b-instruct:free",
+                    ]
+                }
+            ]
+        except Exception:
+            pass  # Non-critical: tasks may fail on rate limit but will retry next schedule
         context: AgentContext = AgentContext(config, id=task.context_id, name=task.name)
         # context.id = task.context_id
         # initial name before renaming is same as task name
